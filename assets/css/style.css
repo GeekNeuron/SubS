@@ -204,3 +204,108 @@ body.dark-theme .text-input:focus {
     border-color: #6a95e4;
     outline: none;
 }
+
+/* Append this to your existing style.css file */
+
+/* Find and Replace Panel */
+#find-replace-panel {
+    max-width: 800px;
+    margin: 0 auto 1.5rem auto;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    position: relative;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+#find-replace-panel.hidden {
+    height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border: none;
+    opacity: 0;
+}
+
+.find-replace-grid {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.find-replace-grid input[type="text"] {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Important for 100% width */
+}
+
+.find-replace-grid button,
+#find-replace-panel #btn-replace-all {
+    padding: 0.5rem 1rem;
+    background-color: #e7e7e7;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.find-replace-options {
+    margin: 0.75rem 0;
+    font-size: 0.9rem;
+}
+
+.find-replace-options label {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+}
+
+#find-replace-panel .close-button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #888;
+}
+html[dir="rtl"] #find-replace-panel .close-button {
+    right: auto;
+    left: 0.75rem;
+}
+
+/* Highlighting searched text */
+.text-input.highlight {
+    border: 2px solid #007bff;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+}
+
+/* Dark Theme for Find/Replace Panel */
+body.dark-theme #find-replace-panel {
+    background-color: #252525;
+    border-color: #444;
+}
+body.dark-theme .find-replace-grid input[type="text"] {
+    background-color: #2c2c2c;
+    border-color: #555;
+    color: #f0f0f0;
+}
+body.dark-theme .find-replace-grid button,
+body.dark-theme #find-replace-panel #btn-replace-all {
+    background-color: #3a3a3a;
+    border-color: #555;
+    color: #f0f0f0;
+}
+body.dark-theme #find-replace-panel .close-button {
+    color: #aaa;
+}
+body.dark-theme .text-input.highlight {
+    border-color: #4b95ff;
+    box-shadow: 0 0 10px rgba(75, 149, 255, 0.5);
+}

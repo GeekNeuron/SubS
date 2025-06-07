@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SubX - Subtitle Editor</title>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="light-theme">
@@ -21,9 +23,9 @@
 
     <main>
         <div id="editor-toolbar">
-            <button id="btn-new-line" class="toolbar-button" data-key="newLine" title="Add a new line"><i class="fas fa-plus"></i> New</button>
-            <button id="btn-delete-lines" class="toolbar-button" data-key="deleteLines" title="Delete selected lines"><i class="fas fa-trash"></i> Delete</button>
-            <button id="btn-merge-lines" class="toolbar-button" data-key="mergeLines" title="Merge selected lines"><i class="fas fa-compress-arrows-alt"></i> Merge</button>
+            <button id="btn-new-line" class="toolbar-button" title="Add a new line"><i class="fas fa-plus"></i><span data-key="newLine">New</span></button>
+            <button id="btn-delete-lines" class="toolbar-button" title="Delete selected lines"><i class="fas fa-trash"></i><span data-key="deleteLines">Delete</span></button>
+            <button id="btn-merge-lines" class="toolbar-button" title="Merge selected lines"><i class="fas fa-compress-arrows-alt"></i><span data-key="mergeLines">Merge</span></button>
         </div>
 
         <div id="subtitle-grid-container">

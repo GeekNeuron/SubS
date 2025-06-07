@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SubX - Subtitle Editor</title>
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="light-theme">
@@ -26,7 +24,23 @@
             <button id="btn-new-line" class="toolbar-button" title="Add a new line"><i class="fas fa-plus"></i><span data-key="newLine">New</span></button>
             <button id="btn-delete-lines" class="toolbar-button" title="Delete selected lines"><i class="fas fa-trash"></i><span data-key="deleteLines">Delete</span></button>
             <button id="btn-merge-lines" class="toolbar-button" title="Merge selected lines"><i class="fas fa-compress-arrows-alt"></i><span data-key="mergeLines">Merge</span></button>
+            <button id="btn-toggle-find" class="toolbar-button" title="Find and Replace"><i class="fas fa-search"></i><span data-key="findReplace">Find & Replace</span></button>
         </div>
+
+        <div id="find-replace-panel" class="hidden">
+            <div class="find-replace-grid">
+                <input type="text" id="find-input" data-key-placeholder="findPlaceholder" placeholder="Find...">
+                <button id="btn-find-next" data-key="findNext">Find Next</button>
+                <input type="text" id="replace-input" data-key-placeholder="replacePlaceholder" placeholder="Replace with...">
+                <button id="btn-replace" data-key="replace">Replace</button>
+            </div>
+            <div class="find-replace-options">
+                <label><input type="checkbox" id="check-case-sensitive"> <span data-key="caseSensitive">Case sensitive</span></label>
+            </div>
+            <button id="btn-replace-all" data-key="replaceAll">Replace All</button>
+            <button id="btn-close-find-replace" class="close-button" title="Close">&times;</button>
+        </div>
+
 
         <div id="subtitle-grid-container">
             <table id="subtitle-table">

@@ -3,11 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="SubX - A modern, web-based subtitle editor for professionals and beginners.">
-    <meta name="author" content="GeekNeuron">
-    
     <title>SubX - Subtitle Editor</title>
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="light-theme">
@@ -23,11 +20,30 @@
     </header>
 
     <main>
-        <p data-key="welcomeMessage">Welcome to the SubX subtitle editor project!</p>
-        <p data-key="subtitleMessage">This is a professional start for a galactic project.</p>
-        
-        </main>
-    
+        <div id="editor-toolbar">
+            <button id="btn-new-line" class="toolbar-button" data-key="newLine" title="Add a new line"><i class="fas fa-plus"></i> New</button>
+            <button id="btn-delete-lines" class="toolbar-button" data-key="deleteLines" title="Delete selected lines"><i class="fas fa-trash"></i> Delete</button>
+            <button id="btn-merge-lines" class="toolbar-button" data-key="mergeLines" title="Merge selected lines"><i class="fas fa-compress-arrows-alt"></i> Merge</button>
+        </div>
+
+        <div id="subtitle-grid-container">
+            <table id="subtitle-table">
+                <thead>
+                    <tr>
+                        <th class="col-select"><input type="checkbox" id="select-all-checkbox" title="Select All"></th>
+                        <th class="col-number" data-key="colNumber">#</th>
+                        <th class="col-start" data-key="colStart">Start Time</th>
+                        <th class="col-end" data-key="colEnd">End Time</th>
+                        <th class="col-duration" data-key="colDuration">Duration</th>
+                        <th class="col-text" data-key="colText">Text</th>
+                    </tr>
+                </thead>
+                <tbody id="subtitle-lines-body">
+                    </tbody>
+            </table>
+        </div>
+    </main>
+
     <script src="assets/js/main.js"></script>
 </body>
 </html>

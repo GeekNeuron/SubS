@@ -25,6 +25,8 @@
             <button id="btn-delete-lines" class="toolbar-button" title="Delete selected lines"><i class="fas fa-trash"></i><span data-key="deleteLines">Delete</span></button>
             <button id="btn-merge-lines" class="toolbar-button" title="Merge selected lines"><i class="fas fa-compress-arrows-alt"></i><span data-key="mergeLines">Merge</span></button>
             <button id="btn-toggle-find" class="toolbar-button" title="Find and Replace"><i class="fas fa-search"></i><span data-key="findReplace">Find & Replace</span></button>
+            <button id="btn-import" class="toolbar-button" title="Import SRT/VTT file"><i class="fas fa-file-import"></i><span data-key="importFile">Import</span></button>
+            <button id="btn-export" class="toolbar-button" title="Export as SRT file"><i class="fas fa-file-export"></i><span data-key="exportFile">Export</span></button>
         </div>
 
         <div id="find-replace-panel" class="hidden">
@@ -60,6 +62,7 @@
         </div>
     </main>
 
-    <script src="assets/js/main.js"></script>
+    <input type="file" id="file-input" accept=".srt,.vtt" style="display: none;">
+<script src="assets/js/main.js"></script>
 </body>
 </html>

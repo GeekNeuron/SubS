@@ -41,17 +41,16 @@ header {
 #app-title {
     font-size: 2.5rem;
     cursor: pointer;
-    user-select: none;      /* Prevents text selection on double-click */
-    display: inline-block;  /* Makes the clickable area fit the text */
-    padding: 0;             /* Removes internal spacing */
-    background-color: transparent; /* Removes any background color */
-    border-radius: 0;       /* Removes rounded corners */
-    outline: none;          /* Removes the focus outline on click */
-    transition: transform 0.2s ease;
+    user-select: none;
+    display: inline-block;
+    padding: 0;
+    background-color: transparent;
+    border-radius: 0;
+    outline: none;
 }
 
 #app-title:hover {
-    transform: scale(1.05);
+    transform: none;
 }
 
 main {

@@ -55,16 +55,20 @@ header {
     margin-top: 3rem; /* Make space for nav */
 }
 
-#theme-switcher {
+/* Delete the old #theme-switcher styles and replace with this */
+#app-title {
     font-size: 2.5rem;
     cursor: pointer;
-    user-select: none;
-    display: inline-block;
-    padding: 10px 20px;
-    border-radius: 10px;
+    user-select: none;      /* Prevents text selection on double-click */
+    display: inline-block;  /* Makes the clickable area fit the text */
+    padding: 0;             /* Removes internal spacing */
+    background-color: transparent; /* Removes any background color */
+    border-radius: 0;       /* Removes rounded corners */
+    outline: none;          /* Removes the focus outline on click */
     transition: transform 0.2s ease;
 }
-#theme-switcher:hover {
+
+#app-title:hover {
     transform: scale(1.05);
 }
 
@@ -308,4 +312,28 @@ body.dark-theme #find-replace-panel .close-button {
 body.dark-theme .text-input.highlight {
     border-color: #4b95ff;
     box-shadow: 0 0 10px rgba(75, 149, 255, 0.5);
+}
+
+footer {
+    text-align: center;
+    margin-top: 3rem;
+    font-size: 0.9rem;
+    color: #888;
+}
+
+footer a {
+    color: #5a95e4;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+body.dark-theme footer {
+    color: #777;
+}
+
+body.dark-theme footer a {
+    color: #6a95e4;
 }

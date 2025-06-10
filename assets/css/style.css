@@ -35,7 +35,7 @@ body.dark-theme {
 header {
     text-align: center;
     margin-bottom: 2rem;
-    margin-top: 3rem; /* Make space for nav */
+    margin-top: 3rem;
 }
 
 #app-title {
@@ -87,7 +87,7 @@ main {
 .toolbar-button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
-    background-color: #f0f0f0; /* Keep base color when disabled */
+    background-color: #f0f0f0;
     border-color: #ccc;
 }
 
@@ -98,8 +98,8 @@ body.dark-theme .toolbar-button {
     color: var(--text-color-primary);
 }
 
-body.dark-theme .toolbar-button:hover {
-    background-color: #3e5060; /* A slightly lighter shade for hover */
+body.dark-theme .toolbar-button:hover:not(:disabled) {
+    background-color: #3e5060;
     border-color: var(--highlight-border);
 }
 
@@ -114,7 +114,7 @@ body.dark-theme .toolbar-button:disabled {
     margin: 0 auto;
     border: 1px solid #ccc;
     border-radius: 8px;
-    overflow-x: auto; /* For responsiveness */
+    overflow-x: auto;
 }
 
 #subtitle-table {
@@ -137,6 +137,7 @@ body.dark-theme .toolbar-button:disabled {
     text-transform: uppercase;
     position: sticky;
     top: 0;
+    z-index: 1;
 }
 
 #subtitle-table td {
@@ -147,7 +148,7 @@ body.dark-theme .toolbar-button:disabled {
 .col-select, .col-number { width: 5%; }
 .col-start, .col-end, .col-duration { width: 15%; }
 .col-text { width: 45%; text-align: left; }
-html[dir="rtl"] .col-text { text-align: right; } /* RTL Support */
+html[dir="rtl"] .col-text { text-align: right; }
 
 /* Table inputs */
 .time-input {
@@ -175,16 +176,10 @@ html[dir="rtl"] .col-text { text-align: right; } /* RTL Support */
 }
 
 /* Dark theme for table */
-body.dark-theme #subtitle-grid-container { 
-    border-color: var(--border-color); 
-}
+body.dark-theme #subtitle-grid-container { border-color: var(--border-color); }
 body.dark-theme #subtitle-table th,
-body.dark-theme #subtitle-table td { 
-    border-bottom-color: var(--border-color); 
-}
-body.dark-theme #subtitle-table th { 
-    background-color: var(--container-bg); 
-}
+body.dark-theme #subtitle-table td { border-bottom-color: var(--border-color); }
+body.dark-theme #subtitle-table th { background-color: var(--container-bg); }
 body.dark-theme .time-input,
 body.dark-theme .text-input {
     background-color: var(--input-bg);
@@ -231,7 +226,7 @@ body.dark-theme .text-input:focus {
     padding: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-sizing: border-box; /* Important for 100% width */
+    box-sizing: border-box;
 }
 
 .find-replace-grid button,
@@ -308,6 +303,7 @@ body.dark-theme .text-input.highlight {
 footer {
     text-align: center;
     margin-top: 3rem;
+    padding-bottom: 2rem;
     font-size: 0.9rem;
     color: #888;
 }
@@ -328,4 +324,3 @@ body.dark-theme footer {
 body.dark-theme footer a {
     color: var(--highlight-border);
 }
-

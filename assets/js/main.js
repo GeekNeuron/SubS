@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- DOM Elements ---
     const appTitle = document.getElementById('app-title');
-    const langSwitcher = document.getElementById('lang-switcher');
     const body = document.body;
     const html = document.documentElement;
     const subtitleBody = document.getElementById('subtitle-lines-body');
@@ -35,23 +34,55 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- Translations Dictionary ---
     const translations = {
-        en: {
-            appTitle: "SubX | Subtitle Editor", themeSwitcherTitle: "Click to toggle theme", newLine: "New", deleteLines: "Delete", mergeLines: "Merge", findReplace: "Find & Replace",
-            colNumber: "#", colStart: "Start Time", colEnd: "End Time", colDuration: "Duration", colText: "Text", deleteConfirm: (count) => `Are you sure you want to delete ${count} line(s)?`,
-            findPlaceholder: "Find...", replacePlaceholder: "Replace with...", findNext: "Find Next", replace: "Replace", replaceAll: "Replace All", caseSensitive: "Case sensitive", replacedCount: (count) => `Replaced ${count} occurrence(s).`, notFound: "Text not found."
-     importFile: "Import",
-
-exportFile: "Export"
-        },
-        fa: {
-            appTitle: "SubX | ویرایشگر زیرنویس", themeSwitcherTitle: "برای تغییر تم کلیک کنید", newLine: "جدید", deleteLines: "حذف", mergeLines: "ادغام", findReplace: "جستجو و جایگزینی",
-            colNumber: "#", colStart: "زمان شروع", colEnd: "زمان پایان", colDuration: "مدت زمان", colText: "متن", deleteConfirm: (count) => `آیا از حذف ${count} خط اطمینان دارید؟`,
-            findPlaceholder: "جستجو...", replacePlaceholder: "جایگزینی با...", findNext: "بعدی", replace: "جایگزینی", replaceAll: "جایگزینی همه", caseSensitive: "حساس به حروف", replacedCount: (count) => `${count} مورد جایگزین شد.`, notFound: "متن مورد نظر یافت نشد."
-    importFile: "وارد کردن",
-
-exportFile: "خروجی"
-}
-    };
+    en: {
+        appTitle: "SubX | Subtitle Editor",
+        themeSwitcherTitle: "Click to toggle theme",
+        newLine: "New",
+        deleteLines: "Delete",
+        mergeLines: "Merge",
+        findReplace: "Find & Replace",
+        colNumber: "#",
+        colStart: "Start Time",
+        colEnd: "End Time",
+        colDuration: "Duration",
+        colText: "Text",
+        deleteConfirm: (count) => `Are you sure you want to delete ${count} line(s)?`,
+        findPlaceholder: "Find...",
+        replacePlaceholder: "Replace with...",
+        findNext: "Find Next",
+        replace: "Replace",
+        replaceAll: "Replace All",
+        caseSensitive: "Case sensitive",
+        replacedCount: (count) => `Replaced ${count} occurrence(s).`,
+        notFound: "Text not found.", // <<-- کامای اینجا اضافه شد
+        importFile: "Import",
+        exportFile: "Export"
+    },
+    fa: {
+        appTitle: "SubX | ویرایشگر زیرنویس",
+        themeSwitcherTitle: "برای تغییر تم کلیک کنید",
+        newLine: "جدید",
+        deleteLines: "حذف",
+        mergeLines: "ادغام",
+        findReplace: "جستجو و جایگزینی",
+        colNumber: "#",
+        colStart: "زمان شروع",
+        colEnd: "زمان پایان",
+        colDuration: "مدت زمان",
+        colText: "متن",
+        deleteConfirm: (count) => `آیا از حذف ${count} خط اطمینان دارید؟`,
+        findPlaceholder: "جستجو...",
+        replacePlaceholder: "جایگزینی با...",
+        findNext: "بعدی",
+        replace: "جایگزینی",
+        replaceAll: "جایگزینی همه",
+        caseSensitive: "حساس به حروف",
+        replacedCount: (count) => `${count} مورد جایگزین شد.`,
+        notFound: "متن مورد نظر یافت نشد.", // <<-- کامای اینجا اضافه شد
+        importFile: "ایمپورت", // ترجمه این بخش را به "ایمپورت" تغییر دادم تا با دکمه همخوانی داشته باشد
+        exportFile: "خروجی"
+    }
+};
 
     // --- Application State ---
     let subtitleData = [];
@@ -274,7 +305,7 @@ const handleExport = () => {
     const handleTableInput = (e) => { const row = e.target.closest('tr'); if(!row) return; const id = parseInt(row.dataset.id); const line = subtitleData.find(l => l.id === id); if(!line) return; if(e.target.classList.contains('time-input')){ if(e.target.parentElement.classList.contains('col-start')) line.startTime = e.target.value; else line.endTime = e.target.value; } if(e.target.classList.contains('text-input')){ line.text = e.target.value; e.target.rows = (e.target.value.match(/\n/g) || []).length + 1; }};
     const applyTheme = (theme) => { body.className = theme; localStorage.setItem('theme', theme); };
     const toggleTheme = () => { currentTheme = (body.classList.contains('light-theme')) ? 'dark-theme' : 'light-theme'; applyTheme(currentTheme); };
-    const applyLanguage = (lang) => { html.lang = lang; html.dir = (lang === 'fa') ? 'rtl' : 'ltr'; document.querySelectorAll('[data-key]').forEach(el => { const key = el.dataset.key; const translation = translations[lang][key]; if(translation) el.textContent = translation; }); document.querySelectorAll('[data-key-placeholder]').forEach(el => { const key = el.dataset.keyPlaceholder; const translation = translations[lang][key]; if(translation) el.placeholder = translation; }); if (themeSwitcher) themeSwitcher.title = translations[lang].themeSwitcherTitle || ''; localStorage.setItem('language', lang); };
+    const applyLanguage = (lang) => { html.lang = lang; html.dir = (lang === 'fa') ? 'rtl' : 'ltr'; document.querySelectorAll('[data-key]').forEach(el => { const key = el.dataset.key; const translation = translations[lang][key]; if(translation) el.textContent = translation; }); document.querySelectorAll('[data-key-placeholder]').forEach(el => { const key = el.dataset.keyPlaceholder; const translation = translations[lang][key]; if(translation) el.placeholder = translation; }); if (appTitle) appTitle.title = translations[lang].themeSwitcherTitle || ''; localStorage.setItem('language', lang); };
     const toggleLanguage = () => { currentLang = (html.lang === 'en') ? 'fa' : 'en'; applyLanguage(currentLang); };
 
     // --- Initialization and Event Listeners ---

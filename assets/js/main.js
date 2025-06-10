@@ -7,7 +7,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- DOM Elements ---
-    const themeSwitcher = document.getElementById('theme-switcher');
+    const appTitle = document.getElementById('app-title');
     const langSwitcher = document.getElementById('lang-switcher');
     const body = document.body;
     const html = document.documentElement;
@@ -286,8 +286,27 @@ const handleExport = () => {
     };
 
     // Bind events
-    themeSwitcher.addEventListener('click', toggleTheme);
-    langSwitcher.addEventListener('click', toggleLanguage);
+    // Replace the previous event listeners for themeSwitcher and langSwitcher with this block
+
+let clickTimer = null; // A variable to hold our timer
+
+appTitle.addEventListener('click', () => {
+    // When a click occurs, we set a timer.
+    // If a dblclick doesn't happen within 200ms, this will run.
+    clickTimer = setTimeout(() => {
+        toggleTheme();
+    }, 200); 
+});
+
+appTitle.addEventListener('dblclick', () => {
+    // If a dblclick happens, it means the user clicked twice quickly.
+    // So, we must cancel the pending timer for the single click.
+    clearTimeout(clickTimer);
+
+    // Now, we can safely run the double-click action.
+    toggleLanguage();
+});
+
     btnNewLine.addEventListener('click', handleNewLine);
     btnDeleteLines.addEventListener('click', handleDeleteLines);
     btnMergeLines.addEventListener('click', handleMergeLines);

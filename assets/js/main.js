@@ -29,26 +29,32 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnReplaceAll = document.getElementById('btn-replace-all');
     const btnCloseFindReplace = document.getElementById('btn-close-find-replace');
     const checkCaseSensitive = document.getElementById('check-case-sensitive');
-
+    const btnImport = document.getElementById('btn-import');
+    const btnExport = document.getElementById('btn-export');
+    const fileInput = document.getElementById('file-input');
+    
     // --- Translations Dictionary ---
     const translations = {
         en: {
             appTitle: "SubX | Subtitle Editor", themeSwitcherTitle: "Click to toggle theme", newLine: "New", deleteLines: "Delete", mergeLines: "Merge", findReplace: "Find & Replace",
             colNumber: "#", colStart: "Start Time", colEnd: "End Time", colDuration: "Duration", colText: "Text", deleteConfirm: (count) => `Are you sure you want to delete ${count} line(s)?`,
             findPlaceholder: "Find...", replacePlaceholder: "Replace with...", findNext: "Find Next", replace: "Replace", replaceAll: "Replace All", caseSensitive: "Case sensitive", replacedCount: (count) => `Replaced ${count} occurrence(s).`, notFound: "Text not found."
+     importFile: "Import",
+
+exportFile: "Export"
         },
         fa: {
             appTitle: "SubX | ویرایشگر زیرنویس", themeSwitcherTitle: "برای تغییر تم کلیک کنید", newLine: "جدید", deleteLines: "حذف", mergeLines: "ادغام", findReplace: "جستجو و جایگزینی",
             colNumber: "#", colStart: "زمان شروع", colEnd: "زمان پایان", colDuration: "مدت زمان", colText: "متن", deleteConfirm: (count) => `آیا از حذف ${count} خط اطمینان دارید؟`,
             findPlaceholder: "جستجو...", replacePlaceholder: "جایگزینی با...", findNext: "بعدی", replace: "جایگزینی", replaceAll: "جایگزینی همه", caseSensitive: "حساس به حروف", replacedCount: (count) => `${count} مورد جایگزین شد.`, notFound: "متن مورد نظر یافت نشد."
-        }
+    importFile: "وارد کردن",
+
+exportFile: "خروجی"
+}
     };
 
     // --- Application State ---
-    let subtitleData = [
-        { id: 1, startTime: '00:00:01,234', endTime: '00:00:03,456', text: 'This is the first subtitle line. A simple line.' },
-        { id: 2, startTime: '00:00:04,000', endTime: '00:00:06,789', text: 'And this is the second one.\nIt can have multiple lines of text.' }
-    ];
+    let subtitleData = [];
     let currentTheme = localStorage.getItem('theme') || 'light-theme';
     let currentLang = localStorage.getItem('language') || 'en';
     let findState = {
@@ -60,6 +66,76 @@ document.addEventListener('DOMContentLoaded', () => {
     // (render, renumberIds, getSelectedLineIds, updateToolbarButtons remain mostly the same)
     const render = () => { /* ... see below ... */ };
     const renumberIds = () => { /* ... see below ... */ };
+
+// Function to parse SRT content from text
+const parseSrt = (srtContent) => {
+    // Replace carriage returns and trim whitespace, then split by double newlines
+    const blocks = srtContent.trim().replace(/\r/g, '').split('\n\n');
+    
+    const parsedData = blocks.map(block => {
+        const parts = block.split('\n');
+        if (parts.length >= 3) {
+            const id = parseInt(parts[0], 10);
+            const timeMatch = parts[1].match(/(\d{2}:\d{2}:\d{2},\d{3})\s*-->\s*(\d{2}:\d{2}:\d{2},\d{3})/);
+            
+            if (timeMatch) {
+                const startTime = timeMatch[1];
+                const endTime = timeMatch[2];
+                const text = parts.slice(2).join('\n');
+                return { id, startTime, endTime, text };
+            }
+        }
+        return null; // Return null for invalid blocks
+    }).filter(Boolean); // Filter out any null entries
+
+    return parsedData;
+};
+
+// Function to handle the file selection and reading process
+const handleFileLoad = (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        const content = e.target.result;
+        subtitleData = parseSrt(content); // Parse the content and update the state
+        render(); // Re-render the grid with the new data
+        alert(`Successfully imported ${file.name}`);
+    };
+    reader.onerror = () => {
+        alert('Error reading file!');
+    };
+    reader.readAsText(file);
+    
+    // Reset file input to allow loading the same file again if needed
+    event.target.value = ''; 
+};
+
+// Function to generate a string in SRT format from the current data
+const generateSrtContent = () => {
+    return subtitleData.map(line => {
+        return `${line.id}\n${line.startTime} --> ${line.endTime}\n${line.text}`;
+    }).join('\n\n');
+};
+
+// Function to trigger the download of the generated SRT file
+const handleExport = () => {
+    if (subtitleData.length === 0) {
+        alert('Nothing to export!');
+        return;
+    }
+    const srtContent = generateSrtContent();
+    const blob = new Blob([srtContent], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'subx_export.srt'; // Set a default filename
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+};
 
     // --- Find & Replace Logic ---
     const resetFindState = () => {
@@ -218,6 +294,9 @@ document.addEventListener('DOMContentLoaded', () => {
     selectAllCheckbox.addEventListener('change', (e) => { document.querySelectorAll('.line-checkbox').forEach(cb => cb.checked = e.target.checked); updateToolbarButtons(); });
     subtitleBody.addEventListener('change', (e) => { if (e.target.classList.contains('line-checkbox')) updateToolbarButtons(); });
     subtitleBody.addEventListener('input', handleTableInput);
+    btnImport.addEventListener('click', () => fileInput.click()); // On click, trigger the hidden file input
+    fileInput.addEventListener('change', handleFileLoad);        // When a file is selected, load it
+    btnExport.addEventListener('click', handleExport);           // On click, export the data
 
     // Find & Replace events
     btnToggleFind.addEventListener('click', () => findReplacePanel.classList.toggle('hidden'));
